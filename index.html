@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Apresentação do OpenBSD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      background-color: #f0f4f8;
+      color: #333;
+    }
+    header {
+      background-color: #004880;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h2 {
+      color: #004880;
+    }
+    .comando {
+      background: #fff;
+      padding: 10px 15px;
+      margin: 10px 0;
+      border-left: 4px solid #004880;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .comando code {
+      background: #eef;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    .btn {
+      display: inline-block;
+      background: #007acc;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 20px;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #005ea6;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>✨ Bem-vindo ao OpenBSD</h1>
+    <p>Um sistema operacional seguro, leve e eficiente.</p>
+  </header>
+  <main>
+    <h2>🔍 O que é o OpenBSD?</h2>
+    <p>OpenBSD é um sistema operacional tipo Unix conhecido por sua segurança, simplicidade e código de alta qualidade. Ideal para servidores, roteadores, firewalls e ambientes de aprendizado.</p>
+
+    <h2>🛠️ Comandos úteis</h2>
+
+    <div class="comando">
+      <strong>Ver usuário atual:</strong> <code>whoami</code>
+    </div>
+    <div class="comando">
+      <strong>Ver IP e interfaces:</strong> <code>ifconfig</code>
+    </div>
+    <div class="comando">
+      <strong>Ver tempo ligado:</strong> <code>uptime</code>
+    </div>
+    <div class="comando">
+      <strong>Ver uso de disco:</strong> <code>df -h</code>
+    </div>
+    <div class="comando">
+      <strong>Instalar pacotes:</strong> <code>pkg_add nome-do-pacote</code>
+    </div>
+    <div class="comando">
+      <strong>Gerenciar serviços:</strong> <code>rcctl start|stop|restart serviço</code>
+    </div>
+    <div class="comando">
+      <strong>Adicionar usuário:</strong> <code>useradd -m usuario</code>
+    </div>
+    <div class="comando">
+      <strong>Remover usuário:</strong> <code>userdel -r usuario</code>
+    </div>
+    <div class="comando">
+      <strong>Ver processos:</strong> <code>top</code> ou <code>htop</code>
+    </div>
+
+    <h2>🎮 Demonstração: Jogo da Cobrinha</h2>
+    <p>Veja o jogo rodando no navegador do OpenBSD!</p>
+    <a class="btn" href="/snake/" target="_blank">▶ Jogar Cobrinha</a>
+
+    <footer>
+      <p>OpenBSD - Seguro. Simples. Eficiente.</p>
+    </footer>
+  </main>
+</body>
+</html>
