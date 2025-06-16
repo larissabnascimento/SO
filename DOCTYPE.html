@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>🐍 Cobrinha do HTTPD</title>
+  <style>
+    body {
+      background: #1a1a1a;
+      margin: 0;
+      font-family: sans-serif;
+      text-align: center;
+      color: #fff;
+    }
+    canvas {
+      background: #000;
+      border: 5px solid #0f0;
+      margin-top: 20px;
+    }
+    h1 {
+      margin-top: 20px;
+      font-size: 32px;
+      color: #0f0;
+      text-shadow: 0 0 5px #0f0;
+    }
+    p {
+      font-size: 16px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <h1>🐍 Cobrinha com IA</h1>
+  <p>Modo apresentação... pressione duas teclas de seta diferentes para começar a jogar.</p>
+  <canvas id="game" width="400" height="400"></canvas>
+
+  <script>
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+
+    const grid = 20;
+    const snake = [{ x: 160, y: 160 }];
+    let dx = grid;
+    let dy = 0;
+    let apple = { x: 320, y: 320 };
+    let growing = false;
+    let demo = true;
+    let pressedKeys = new Set();
+    let colorHue = 0;
+
+    function getRandomPosition() {
+      return Math.floor(Math.random() * (canvas.width / grid)) * grid;
+    }
+
+    function gameLoop() {
+      if (demo) moveTowardApple();
+
+      const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+
+      if (
+        head.x < 0 || head.x >= canvas.width ||
+        head.y < 0 || head.y >= canvas.height ||
+        snake.some((part, i) => i > 0 && head.x === part.x && head.y === part.y)
+      ) {
+        resetGame();
+        return;
+      }
+
+      snake.unshift(head);
+
+      if (head.x === apple.x && head.y === apple.y) {
+        growing = true;
+        apple.x = getRandomPosition();
+        apple.y = getRandomPosition();
+      }
+
+      if (!growing) snake.pop();
+      else growing = false;
+
+      draw();
+    }
+
+    function draw() {
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      colorHue = (colorHue + 5) % 360;
+      ctx.fillStyle = `hsl(${colorHue}, 100%, 50%)`;
+      snake.forEach(part => ctx.fillRect(part.x, part.y, grid - 2, grid - 2));
+
+      ctx.fillStyle = "#f00";
+      ctx.fillRect(apple.x + 2, apple.y + 2, grid - 4, grid - 4);
+    }
+
+    function resetGame() {
+      snake.splice(0, snake.length, { x: 160, y: 160 });
+      dx = grid;
+      dy = 0;
+      apple.x = getRandomPosition();
+      apple.y = getRandomPosition();
+      growing = false;
+      demo = true;
+      pressedKeys.clear();
+    }
+
+    function moveTowardApple() {
+      const head = snake[0];
+
+      if (Math.abs(head.x - apple.x) > Math.abs(head.y - apple.y)) {
+        if (head.x < apple.x && dx === 0) {
+          dx = grid; dy = 0;
+        } else if (head.x > apple.x && dx === 0) {
+          dx = -grid; dy = 0;
+        }
+      } else {
+        if (head.y < apple.y && dy === 0) {
+          dx = 0; dy = grid;
+        } else if (head.y > apple.y && dy === 0) {
+          dx = 0; dy = -grid;
+        }
+      }
+    }
+
+    document.addEventListener("keydown", e => {
+      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+        pressedKeys.add(e.key);
+        if (pressedKeys.size >= 2 && demo) {
+          demo = false;
+          pressedKeys.clear();
+        }
+
+        switch (e.key) {
+          case "ArrowUp": if (dy === 0) { dx = 0; dy = -grid; } break;
+          case "ArrowDown": if (dy === 0) { dx = 0; dy = grid; } break;
+          case "ArrowLeft": if (dx === 0) { dx = -grid; dy = 0; } break;
+          case "ArrowRight": if (dx === 0) { dx = grid; dy = 0; } break;
+        }
+      }
+    });
+
+    setInterval(gameLoop, 100);
+  </script>
+</body>
+</html>
